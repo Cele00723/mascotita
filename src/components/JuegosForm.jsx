@@ -9,10 +9,22 @@ function JuegosForm({onCreateJuego=()=>{}}) {
 
     const [nombre, setNombre] = useState("");
     const [descripcion, setDescripcion] = useState("");
-    const [compania, setCompania] = useState(companias[0]);
+    const [compania, setCompania] = useState(companias[0].value);
     const [plataforma, setPlataforma] = useState("");
     const [anioLanzamiento, setAnioLanzamiento] = useState(null);
     const [tieneFisico, setTieneFisico] = useState(false);
+    
+    const limpiarFormulario = () => {
+        setNombre("");
+        setDescripcion("");
+        setCompania(companias[0].value);
+        setPlataforma("");
+        setAnioLanzamiento(null);
+        setTieneFisico(false);
+    };
+
+    
+
 
     const handleClick = () => {
         const juego = {};
@@ -24,7 +36,11 @@ function JuegosForm({onCreateJuego=()=>{}}) {
         juego.tieneFisico = tieneFisico;
 
         onCreateJuego(juego);
+
+        limpiarFormulario();
     }
+
+
  
   return (
     <Card raised>
@@ -46,8 +62,7 @@ function JuegosForm({onCreateJuego=()=>{}}) {
                 <Select fullWidth id="compania-juego" 
                 value={compania} onChange={(e) => setCompania(e.target.value)} label="Compania">
 
-                    {companias.map((c)=> 
-                        <MenuItem value={c.value}> {c.label} </MenuItem>
+                    {companias.map(c=> <MenuItem value={c.value}> {c.label} </MenuItem>
                     )}
                 </Select> 
             </div> 
@@ -58,7 +73,8 @@ function JuegosForm({onCreateJuego=()=>{}}) {
             </div>
 
             <div className="mt-3">
-                <DatePicker value={anioLanzamiento} onChange={v=>setAnioLanzamiento(v)} fullWidth label="Año de lanzamiento" id="anio-lanzamiento"> </DatePicker>
+                <DatePicker value={anioLanzamiento} onChange={v=>setAnioLanzamiento(v)} 
+                fullWidth label="Año de lanzamiento" id="anio-lanzamiento"> </DatePicker>
             </div>
 
 
